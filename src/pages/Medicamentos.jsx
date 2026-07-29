@@ -112,36 +112,35 @@ function Medicamentos() {
 
   return (
     <div className="bg-gray-50 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-12">
+      <div className="max-w-7xl mx-auto space-y-10">
 
-        {/* --- SECCIÓN 1: CARRUSEL DE IMÁGENES --- */}
-        <section className="relative overflow-hidden rounded-3xl bg-emerald-900 text-white shadow-xl h-[340px] sm:h-[400px]">
+        {/* --- SECCIÓN 1: CARRUSEL LIMPIO SIN CAPAS DE COLOR QUE TAPEN LA IMAGEN --- */}
+        <section className="relative overflow-hidden rounded-3xl text-white shadow-xl h-[320px] sm:h-[400px]">
           {carouselSlides.map((slide, index) => (
             <div
               key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-700 ease-in-out flex items-center justify-between p-8 sm:p-12 ${
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out flex items-center p-6 sm:p-12 ${
                 index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
               }`}
             >
-              <div className="max-w-md z-20 space-y-4">
-                <span className="inline-block bg-emerald-500/30 text-emerald-300 border border-emerald-400/30 text-xs px-3 py-1 rounded-full font-semibold">
+              {/* Imagen de fondo completa sin overlays pesados */}
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className="absolute inset-0 w-full h-full object-cover object-center z-0"
+              />
+
+              {/* Contenido en texto con sombra de texto (drop-shadow) para no oscurecer la foto */}
+              <div className="max-w-lg z-20 space-y-3 sm:space-y-4">
+                <span className="inline-block bg-black/60 text-white text-xs px-3.5 py-1 rounded-full font-semibold backdrop-blur-md shadow-md border border-white/20">
                   {slide.badge}
                 </span>
-                <h2 className="text-2xl sm:text-4xl font-extrabold leading-tight">
+                <h2 className="text-2xl sm:text-4xl font-extrabold leading-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                   {slide.title}
                 </h2>
-                <p className="text-emerald-100 text-sm sm:text-base">
+                <p className="text-white text-xs sm:text-base font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                   {slide.subtitle}
                 </p>
-              </div>
-
-              <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden sm:block">
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-900 to-transparent z-10"></div>
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  className="w-full h-full object-cover object-center"
-                />
               </div>
             </div>
           ))}
@@ -149,13 +148,15 @@ function Medicamentos() {
           {/* Controles del Carrusel */}
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/40 text-white p-2.5 rounded-full backdrop-blur-md transition cursor-pointer"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-black/50 hover:bg-black/80 text-white p-2.5 rounded-full backdrop-blur-md transition cursor-pointer border border-white/20"
+            aria-label="Anterior slide"
           >
             <ChevronLeft size={22} />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/40 text-white p-2.5 rounded-full backdrop-blur-md transition cursor-pointer"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-black/50 hover:bg-black/80 text-white p-2.5 rounded-full backdrop-blur-md transition cursor-pointer border border-white/20"
+            aria-label="Siguiente slide"
           >
             <ChevronRight size={22} />
           </button>
@@ -167,7 +168,7 @@ function Medicamentos() {
                 key={idx}
                 onClick={() => setCurrentSlide(idx)}
                 className={`h-2.5 rounded-full transition-all cursor-pointer ${
-                  idx === currentSlide ? "w-8 bg-emerald-400" : "w-2.5 bg-white/50"
+                  idx === currentSlide ? "w-8 bg-white shadow-md" : "w-2.5 bg-white/50"
                 }`}
               />
             ))}
@@ -175,14 +176,14 @@ function Medicamentos() {
         </section>
 
         {/* --- SECCIÓN 2: BUSCADOR Y FILTROS POR CATEGORÍA --- */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
           {/* Categorías */}
           <div className="flex flex-wrap gap-2 w-full md:w-auto">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-xl text-sm font-medium transition cursor-pointer ${
+                className={`px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer ${
                   selectedCategory === category
                     ? "bg-emerald-600 text-white shadow-sm"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
@@ -200,9 +201,9 @@ function Medicamentos() {
               placeholder="Buscar medicamento..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-emerald-600"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-emerald-600 bg-gray-50/50 focus:bg-white transition"
             />
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
           </div>
         </div>
 
@@ -217,7 +218,7 @@ function Medicamentos() {
               {filteredProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden flex flex-col justify-between hover:shadow-xl transition duration-300 hover:-translate-y-1"
+                  className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between hover:shadow-xl transition duration-300 hover:-translate-y-1"
                 >
                   <div>
                     <div className="relative">
@@ -226,7 +227,7 @@ function Medicamentos() {
                         alt={product.name}
                         className="h-52 w-full object-cover"
                       />
-                      <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-emerald-700 text-xs font-bold px-2.5 py-1 rounded-md">
+                      <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-gray-800 text-xs font-bold px-2.5 py-1 rounded-md shadow-sm">
                         {product.category}
                       </span>
                     </div>
@@ -253,8 +254,8 @@ function Medicamentos() {
                       onClick={() => handleAddToCart(product)}
                       className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-semibold transition cursor-pointer active:scale-95 ${
                         addedItem === product.id
-                          ? "bg-emerald-800 text-white"
-                          : "bg-emerald-600 hover:bg-emerald-700 text-white"
+                          ? "bg-zinc-800 text-white"
+                          : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm"
                       }`}
                     >
                       {addedItem === product.id ? (
