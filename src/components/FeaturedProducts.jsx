@@ -1,14 +1,20 @@
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
+// Importación correcta de las imágenes desde src/assets/pastillas/
+import paracetamolImg from "../assets/pastillas/paracetamol1.jpg";
+import ibuprofenoImg from "../assets/pastillas/iboprofeno.jpg";
+import vitaminaCImg from "../assets/pastillas/vitamina c.jpg";
+import alcoholImg from "../assets/pastillas/Alcohol.jpg";
+
 const products = [
   {
     id: 1,
     name: "Paracetamol 500 mg",
     description: "Analgésico y antipirético.",
-    price: 8.90, // Numérico para operar en el carrito
+    price: 8.90,
     priceLabel: "S/ 8.90",
-    image: "src/assets/pastillas/paracetamol1.jpg",
+    image: paracetamolImg,
   },
   {
     id: 2,
@@ -16,7 +22,7 @@ const products = [
     description: "Alivia dolor e inflamación.",
     price: 12.50,
     priceLabel: "S/ 12.50",
-    image: "src/assets/pastillas/iboprofeno.jpg",
+    image: ibuprofenoImg,
   },
   {
     id: 3,
@@ -24,7 +30,7 @@ const products = [
     description: "Refuerza el sistema inmunológico.",
     price: 24.90,
     priceLabel: "S/ 24.90",
-    image: "src/assets/pastillas/vitamina c.jpg",
+    image: vitaminaCImg,
   },
   {
     id: 4,
@@ -32,7 +38,7 @@ const products = [
     description: "Desinfección y limpieza.",
     price: 7.50,
     priceLabel: "S/ 7.50",
-    image: "src/assets/pastillas/Alcohol.jpg",
+    image: alcoholImg,
   },
 ];
 
